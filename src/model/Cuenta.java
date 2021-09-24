@@ -1,6 +1,11 @@
 package model;
 
-public class Cuenta {
+import javax.swing.JOptionPane;
+
+import logic.MovimientoBL;
+
+public class Cuenta implements MIOperacion {
+
     private String codigo;
     private Moneda moneda;
     private Sucursal sucursal;
@@ -107,6 +112,61 @@ public class Cuenta {
 
     public void setClave(String clave) {
         this.clave = clave;
+    }
+
+    @Override
+    public void retirar(int monto, float costemovimiento) {
+        // TODO Auto-generated method stub
+        if (MovimientoBL.RetirarCuenta(monto, this.codigo)) {
+            JOptionPane.showMessageDialog(null,
+                    "==============================\n\n" + "Nro Movimiento: " + (this.contadorMovimiento++) + "\n"
+                    + "Titular Cuenta: " + this.cliente.getApellidoPaterno() + " "
+                    + this.cliente.getApellidoMaterno() + " " + this.cliente.getNombre() + "\n"
+                    + "Monto retirado : " + monto + "\n" + "Saldo Anterior :" + this.saldo + "\n"
+                    + "Coste de movimiento : " + costemovimiento + "\n" + "Saldo Actual : "
+                    + (this.saldo - (monto + costemovimiento)) + "\n\n" + "==============================",
+                    "DETALLE DE MOVIMIENTO", 1);
+        } else {
+
+            JOptionPane.showMessageDialog(null, "SURGIO UN !ERROR! INTENTELO MAS TARDE", "DETALLE DE MOVIMIENTO", 1);
+        }
+
+    }
+
+    @Override
+    public void transferir(int monto, Cuenta cuentaReferencia, float costemovimiento) {
+        // TODO Auto-generated method stub
+        if (MovimientoBL.TranferirCuenta(monto, this.codigo, cuentaReferencia)) {
+            JOptionPane.showMessageDialog(null, "==============================\n\n" + "Nro Movimiento: "
+                    + (this.contadorMovimiento + 1) + "\n" + "Titular Cuenta: " + this.cliente.getApellidoPaterno()
+                    + " " + this.cliente.getApellidoMaterno() + " " + this.cliente.getNombre() + "\n" + "Monto Transferido : " + monto + "\n"
+                    + "\n" + "Titular Cuenta tranferida : " + cuentaReferencia.getCliente().getApellidoPaterno() + " " + cuentaReferencia.getCliente().getApellidoMaterno() + " " + cuentaReferencia.getCliente().getNombre()
+                    + "\n" + " " + this.cliente.getNombre() + "\n" + "Monto Transferido : " + monto + "\n"
+                    + "Coste de movimiento : " + costemovimiento + "\n" + "==============================",
+                    "DETALLE DE MOVIMIENTO", 1);
+        } else {
+
+            JOptionPane.showMessageDialog(null, "SURGIO UN !ERROR! INTENTELO MAS TARDE", "DETALLE DE MOVIMIENTO", 1);
+        }
+    }
+
+    @Override
+    public void depositar(int monto, float costemovimiento) {
+        // TODO Auto-generated method stub
+        if (MovimientoBL.DespositarCuenta(monto, this.codigo)) {
+            JOptionPane.showMessageDialog(null,
+                    "==============================\n\n" + "Nro Movimiento: " + (this.contadorMovimiento++) + "\n"
+                    + "Titular Cuenta: " + this.cliente.getApellidoPaterno() + " "
+                    + this.cliente.getApellidoMaterno() + " " + this.cliente.getNombre() + "\n"
+                    + "Monto retirado : " + monto + "\n" + "Saldo Anterior :" + this.saldo + "\n"
+                    + "Coste de movimiento : " + costemovimiento + "\n" + "Saldo Actual : "
+                    + (this.saldo - (monto + costemovimiento)) + "\n\n" + "==============================",
+                    "DETALLE DE MOVIMIENTO", 1);
+        } else {
+
+            JOptionPane.showMessageDialog(null, "SURGIO UN !ERROR! INTENTELO MAS TARDE", "DETALLE DE MOVIMIENTO", 1);
+        }
+
     }
 
 }

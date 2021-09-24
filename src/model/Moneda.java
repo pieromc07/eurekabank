@@ -4,6 +4,11 @@ public class Moneda {
     private String codigo;
     private String descripcion; 
 
+
+    public Moneda() {
+    }
+
+
     public Moneda(String codigo, String descripcion) {
         this.codigo = codigo;
         this.descripcion = descripcion;
